@@ -16,7 +16,7 @@ const RenderData = (props) => {
 return(
   <div>
     <Paper style={style} zDepth={2} >
-    <h3>{props.title}</h3>
+    <h5>{props.title}</h5>
     {Object.keys(props.data).map((key, i) => {
       return (
         <div key={i}>{key}:{props.data[key]}</div>

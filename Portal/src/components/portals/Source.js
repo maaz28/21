@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {TextField, Divider, Paper, RaisedButton, SelectField} from 'material-ui';
 // import Snackbar from 'material-ui/Snackbar';
 import {post_request} from '../../utils/helper'
-import {auth} from '../../config/firebaseConfiguration'
+import {auth} from '../../config/firebaseConfiguration' 
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -71,6 +71,23 @@ class Source extends Component{
     swal({
       text: "Your request has been send for confirmation!"
     })
+  })
+    .catch(err => {
+                  swal({
+                  title: "Error 404",
+                  text: err.message,
+                  icon: "error",
+                  buttons: true,
+                  dangerMode: true,
+                })
+  })  .catch(err => {
+                  swal({
+                  title: "Error 404",
+                  text: err.message,
+                  icon: "error",
+                  buttons: true,
+                  dangerMode: true,
+                })
   })
     } //end submit
 

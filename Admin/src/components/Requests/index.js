@@ -8,6 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Paper } from '@material-ui/core';
+import { api_base_url } from '../../config/api';
 
 const styles = {
   card: {
@@ -41,7 +42,7 @@ class index extends Component {
     console.log('====================================');
     console.log(this.props.uuid);
     console.log('====================================');
-    post_request('http://1cc9213f.ngrok.io/admin/pending-request', {uid : this.props.uuid})
+    post_request(api_base_url+'/admin/pending-request', {uid : this.props.uuid})
     .then(res => {
       console.log('====================================');
       if(res.data){
@@ -61,7 +62,7 @@ handlerAccept = (id, participant, _id) => {
   let pos = this.state.requests.map(function(e) { return e.member_id; }).indexOf(id);
 let arr=this.state.requests;
 arr.splice(pos,1);
-post_request('http://1cc9213f.ngrok.io/admin/approve-request', {
+post_request(api_base_url+'/admin/approve-request', {
   uid : this.props.uuid,
   _id : _id,
   participant : participant

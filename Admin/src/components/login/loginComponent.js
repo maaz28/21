@@ -5,6 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {signedIn, updateUserData, USER_LOGGEDOUT} from '../../store/actions/action';
 import {auth, db} from '../../config/firebaseConfiguration';
 import {post_request} from '../../utils/helper'
+import { api_base_url } from "../../config/api";
 
 class LoginComponent extends Component {
   state = {
@@ -48,7 +49,7 @@ class LoginComponent extends Component {
       let user_uid = res.user.uid;
       console.log("works")
           this.props.signedIn();
-      post_request('http://1cc9213f.ngrok.io/admin/is-admin', {uid : user_uid})
+      post_request(api_base_url+'/admin/is-admin', {uid : user_uid})
       .then(res => {
         console.log('====================================');
         console.log("admin is admin works");

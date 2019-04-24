@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import AppBar from './appBar'
-import VehicleController from "../interface/vehicleController";
 import RaisedButton from 'material-ui/RaisedButton'
 import {get_request} from '../utils/helper'
 import RenderData from './RenderData'
 import Grid from '@material-ui/core/Grid';
+import { api_base_url } from '../config/api';
+import swal from 'sweetalert';
 
 export default class SearchBar extends Component {
     state = {
@@ -24,16 +25,36 @@ export default class SearchBar extends Component {
     };
 
     submitHandler = () => {
-      get_request('http://1cc9213f.ngrok.io/participant/timber/' + this.state.value).then(res =>{ 
-          console.log(res.data.result);
-          let data = res.data.result
-          console.log(typeof(res.data.result) );
-          this.setState({
-              source : data.source,
-              packager : data.packager,
-              designer : data.designer,
-              shipper : data.shipper   
+      get_request(api_base_url + '/participant/timber/' + this.state.value).then(res =>{ 
+          console.log(res);
+          if(res !== undefined){
+              let data = res.data.result
+              console.log(typeof(res.data.result) );
+              this.setState({
+                  source : data.source,
+                  packager : data.packager,
+                  designer : data.designer,
+                  shipper : data.shipper   
+              })
+          }else {
+              swal({
+                  title: "Error 404",
+                  text: "something went wrong, can't be able to contact server.",
+                  icon: "error",
+                  buttons: true,
+                  dangerMode: true,
+                })
+          }
           })
+          .catch(err => {
+              console.log(err)
+              swal({
+                title: "Error 404",
+                text: err.message,
+                icon: "error",
+                buttons: true,
+                dangerMode: true,
+              })
           })    
     }
 

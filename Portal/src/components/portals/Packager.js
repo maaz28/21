@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {TextField, Divider, Paper, RaisedButton, SelectField} from 'material-ui';
 // import Snackbar from 'material-ui/Snackbar';
 import {post_request} from '../../utils/helper'
-import {auth} from '../../config/firebaseConfiguration'
+import {auth} from '../../config/firebaseConfiguration' 
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -55,7 +55,7 @@ class Packager extends Component{
    industry_standard_certification : this.state.industry_standard_certification,
    company : this.props.user.company,
    company_id : this.props.user.company_id,
-   style_id : this.state.style_id,
+   batch_id : this.state.batch_id,
     len_of_each : this.state.len_of_each,
     size_piece_meter : this.state.size_piece_meter,
     num_of_length : this.state.num_of_length
@@ -64,7 +64,7 @@ class Packager extends Component{
     console.log(obj)
     post_request(api_base_url + '/participant/request', obj)
     .then(res => {
-    console.log('====================================');
+    console.log('===================================');
     console.log(res);
     swal({
       title: "Request Send",
@@ -72,6 +72,15 @@ class Packager extends Component{
       icon: "success",    
       dangerMode: false,
     })
+  })
+  .catch(err => {
+                  swal({
+                  title: "Error 404",
+                  text: err.message,
+                  icon: "error",
+                  buttons: true,
+                  dangerMode: true,
+                })
   })
     } //end submit
 

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {TextField, Divider, Paper, RaisedButton, SelectField} from 'material-ui';
 // import Snackbar from 'material-ui/Snackbar';
 import {post_request} from '../../utils/helper'
-import {auth} from '../../config/firebaseConfiguration'
+import {auth} from '../../config/firebaseConfiguration' 
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -27,6 +27,7 @@ class Designer extends Component{
         len_of_each: "",
         industry_standard_certification : '',
         est_production_time: new Date(),
+        batch_id : ''
     }
 
     componentDidMount(){
@@ -68,23 +69,33 @@ class Designer extends Component{
    style_id : this.state.style_id,
     len_of_each : this.state.len_of_each,
     size_piece_meter : this.state.size_piece_meter,
-    num_of_length : this.state.num_of_length
+    num_of_length : this.state.num_of_length,
+    batch_id : this.state.batch_id
     }
 
 
  
     console.log(obj)
-  //   post_request(api_base_url + '/participant/request', obj)
-  //   .then(res => {
-  //   console.log('====================================');
-  //   console.log(res);
-  //   swal({
-  //     title: "Request Send",
-  //     text: "Request has been successfully send to the admin for approval.",
-  //     icon: "success",      
-  //     dangerMode: false,
-  //   })
-  // })
+    post_request(api_base_url + '/participant/request', obj)
+    .then(res => {
+    console.log('====================================');
+    console.log(res);
+    swal({
+      title: "Request Send",
+      text: "Request has been successfully send to the admin for approval.",
+      icon: "success",      
+      dangerMode: false,
+    })
+  })
+    .catch(err => {
+                  swal({
+                  title: "Error 404",
+                  text: err.message,
+                  icon: "error",
+                  buttons: true,
+                  dangerMode: true,
+                })
+  })
     } //end submit
 
     changeHandler = name => event => {
@@ -142,6 +153,11 @@ class Designer extends Component{
         hintText="225"
         floatingLabelText="Style ID"
         onChange = {this.changeHandler("style_id")}
+    />
+        <TextField
+        hintText="25"
+        floatingLabelText="Batch ID"
+        onChange = {this.changeHandler("batch_id")}
     />
                     <TextField
             hintText="3"
